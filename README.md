@@ -1,7 +1,9 @@
 # create-sip
 
+Simple projekct generator.
+
 ## Használat
 
 ```bash
-npm create sip@latest webpage valami
+npm create sip@latest
 ```

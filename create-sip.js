@@ -1,18 +1,46 @@
 #!/usr/bin/env node
 
-const { program } = require('commander');
 const { genWebpage } = require('./manager');
+const prompts = require('prompts');
 
-program
-  .name('create-sin')
-  .description('create a new sip project')
+const questions = [
+  {
+    type: 'text',
+    name: 'name',
+    message: 'Project name: ',
+    initial: 'app01'
+  },
+  {
+    type: 'select',
+    name: 'type',
+    message: 'Project type (webpage): ',
+    choices: [
+      { 
+        title: 'webpage',
+        description: 'simple webpage: index.html, style.css',
+        value: 'webpage' 
+      },
+      { 
+        title: 'javascript', 
+        description: 'simple javascript: index.html, style.css,app.js',
+        value: 'javascript' 
+      }
+    ],
+    initial: 0
+  }
+];
 
-program
-  .command('webpage [target]')
-  .description('simple webpage')
-  .action((target) => {
+(async () => {
+  const res = await prompts(questions);
+  if(res.type === 'webpage') {
     console.log('create a new webpage...');
-    genWebpage(target);
-  });
-
-program.parse()
+    genWebpage(res.name);
+    return;
+  }
+  if(res.type === 'javascript') {
+    console.log('create a new javascript...');
+    console.log('Nincs implementálva.')
+    return;
+  }
+  
+})();
