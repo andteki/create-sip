@@ -1,4 +1,7 @@
 const fs = require('fs');
+const path = require('path');
+const dir = path.join(__dirname);
+
 
 const genWebpage = (target) => {
   copyDir('webpage', target);
@@ -6,8 +9,8 @@ const genWebpage = (target) => {
 
 const copyDir = (srcDir, destDir) => {
   fs.mkdirSync(destDir, { recursive: true });
-  for (const file of fs.readdirSync(srcDir)) {
-    fs.copyFileSync(`${srcDir}/${file}`, `${destDir}/${file}`);
+  for (const file of fs.readdirSync(`${dir}/${srcDir}`)) {
+    fs.copyFileSync(`${dir}/${srcDir}/${file}`, `${destDir}/${file}`);
   }
 }
 

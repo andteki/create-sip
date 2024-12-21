@@ -5,7 +5,7 @@ const { genWebpage } = require('./manager');
 
 program
   .name('create-sin')
-  .description('create a new sin project')
+  .description('create a new sip project')
 
 program
   .command('webpage [target]')
