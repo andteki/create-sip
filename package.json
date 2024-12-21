@@ -1,0 +1,23 @@
+{
+  "name": "create-sip",
+  "version": "0.0.1",
+  "main": "index.js",
+  "bin": {
+    "create-sip": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["project", "generator"],
+  "author": "Sallai András",
+  "license": "MIT",
+  "description": "Simple project generator",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "minimist": "^1.2.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andteki/create-sip.git"
+  }  
+}
