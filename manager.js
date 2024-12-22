@@ -57,6 +57,13 @@ const genMockApi = (target) => {
   console.log('npm start');
 }
 
+const genExpressApi = (target) => {
+  copyDir(`${dir}/expressapi`, target);
+  updatePackageName(`${target}/package.json`, target);
+  console.log('ExpressJS REST API sablon created');
+  console.log('Read docs/user_doc.md');
+}
+
 const updatePackageName = (filePath, newName) => {
   const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
   if (content.name) {
@@ -87,5 +94,6 @@ module.exports = {
   genNodejs,
   genWebEsbuildJs,
   genWebEsbuildTs,
-  genMockApi
+  genMockApi,
+  genExpressApi
 }

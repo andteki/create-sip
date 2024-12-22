@@ -7,7 +7,8 @@ const {
   genNodejs,
   genWebEsbuildJs,
   genWebEsbuildTs,
-  genMockApi
+  genMockApi,
+  genExpressApi
 } = require('./manager');
 const prompts = require('prompts');
 
@@ -57,6 +58,15 @@ const questions = [
         title: 'MockAPI',
         description: 'API server with hai-server 0.0.4',
         value: 'mockapi'
+      },
+      { 
+        title: 'Express API',
+        description: 'Express API with simple Sequelize',
+        value: 'expressapi' 
+      },
+      { 
+        title: 'Cancel', 
+        value: 'cancel' 
       }
     ],
     initial: 0
@@ -98,6 +108,11 @@ const questions = [
   if(res.type === 'mockapi') {
     console.log('Create a new MockAPI server...');
     genMockApi(res.name);
+    return;
+  }
+  if(res.type === 'expressapi') {
+    console.log('Create a new Express API...');
+    genExpressApi(res.name);
     return;
   }
   
