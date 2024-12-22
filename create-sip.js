@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { genWebpage } = require('./manager');
+const { genWebpage, genJavascript } = require('./manager');
 const prompts = require('prompts');
 
 const questions = [
@@ -22,7 +22,7 @@ const questions = [
       },
       { 
         title: 'javascript', 
-        description: 'simple javascript: index.html, style.css,app.js',
+        description: 'simple javascript: index.html, style.css, app.js',
         value: 'javascript' 
       }
     ],
@@ -39,7 +39,7 @@ const questions = [
   }
   if(res.type === 'javascript') {
     console.log('create a new javascript...');
-    console.log('Nincs implementálva.')
+    genJavascript(res.name);
     return;
   }
   

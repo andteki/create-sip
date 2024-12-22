@@ -7,6 +7,10 @@ const genWebpage = (target) => {
   copyDir('webpage', target);
 }
 
+const genJavascript = (target) => {
+  copyDir('javascript', target);
+}
+
 const copyDir = (srcDir, destDir) => {
   fs.mkdirSync(destDir, { recursive: true });
   for (const file of fs.readdirSync(`${dir}/${srcDir}`)) {
@@ -15,5 +19,5 @@ const copyDir = (srcDir, destDir) => {
 }
 
 module.exports = {
-  genWebpage
+  genWebpage, genJavascript
 }
