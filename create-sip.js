@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 
-const { genWebpage, genJavascript } = require('./manager');
+const { 
+  genWebpage, 
+  genBootstrap, 
+  genJavascript, 
+  genNodejs,
+  genWebEsbuildJs,
+  genWebEsbuildTs,
+  genMockApi
+} = require('./manager');
 const prompts = require('prompts');
 
 const questions = [
@@ -13,33 +21,83 @@ const questions = [
   {
     type: 'select',
     name: 'type',
-    message: 'Project type (webpage): ',
+    message: 'Project type: ',
     choices: [
       { 
-        title: 'webpage',
-        description: 'simple webpage: index.html, style.css',
+        title: 'Webpage',
+        description: 'Simple webpage: index.html, style.css',
         value: 'webpage' 
       },
       { 
-        title: 'javascript', 
-        description: 'simple javascript: index.html, style.css, app.js',
+        title: 'Web Bootstrap',
+        description: 'Simple webpage with Bootstrap',
+        value: 'webbootstrap' 
+      },
+      { 
+        title: 'JavaScript', 
+        description: 'Only index.html, style.css, app.js',
         value: 'javascript' 
+      },
+      { 
+        title: 'Web Node.js', 
+        description: 'Node.js project for webpage',
+        value: 'webnodejs' 
+      },
+      { 
+        title: 'ESBuild JavaScript',
+        description: 'Esbuild JavaScript webpage',
+        value: 'webesbuildjs'
+      },
+      { 
+        title: 'ESBuild TypeScript',
+        description: 'Esbuild TypeScript webpage',
+        value: 'webesbuildts'
+      },
+      { 
+        title: 'MockAPI',
+        description: 'API server with hai-server 0.0.4',
+        value: 'mockapi'
       }
     ],
     initial: 0
   }
 ];
 
-(async () => {
+(async () => {  
   const res = await prompts(questions);
   if(res.type === 'webpage') {
-    console.log('create a new webpage...');
+    console.log('Create a new webpage...');
     genWebpage(res.name);
     return;
   }
+  if(res.type === 'webbootstrap') {
+    console.log('Create a new webpage with Bootstrap...');
+    genBootstrap(res.name);
+    return;
+  }
   if(res.type === 'javascript') {
-    console.log('create a new javascript...');
+    console.log('Create a new javascript...');
     genJavascript(res.name);
+    return;
+  }
+  if(res.type === 'webnodejs') {
+    console.log('Create a new webpage with Node.js...');
+    genNodejs(res.name);
+    return;
+  }
+  if(res.type === 'webesbuildjs') {
+    console.log('Create a new webpage with ESBuild and Javascript...');
+    genWebEsbuildJs(res.name);
+    return;
+  }
+  if(res.type === 'webesbuildts') {
+    console.log('Create a new webpage with ESBuild and Typescript...');
+    genWebEsbuildTs(res.name);
+    return;
+  }
+  if(res.type === 'mockapi') {
+    console.log('Create a new MockAPI server...');
+    genMockApi(res.name);
     return;
   }
   
