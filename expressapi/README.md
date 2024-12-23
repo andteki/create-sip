@@ -10,6 +10,10 @@ Express based REST API sablon
 npm install
 ```
 
+## Copy config file
+
+Copy **config/default.json.example** to **config/default.json** file.
+
 ## APP KEY generation
 
 Run the genkey tools:
