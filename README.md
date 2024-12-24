@@ -1,6 +1,8 @@
 # create-sip
 
-Simple projekct generator.
+Simple project generator.
+
+## Project types
 
 * Simple webpage. index.html and style.css
 * Webpage with Bootstrap with CDN.
@@ -9,6 +11,7 @@ Simple projekct generator.
 * ESBuild and Javascript project for webpage.
 * ESBuild and Typescript project for webpage.
 * Mock REST API server.
+* Express.js REST API start server.
 
 ## Using
 
