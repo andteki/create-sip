@@ -1,7 +1,6 @@
-const fs = require('fs');
+const { copyDir, updatePackageName } = require('./utils');
 const path = require('path');
 const dir = path.join(__dirname);
-
 
 const genWebpage = (target) => {
   copyDir(`${dir}/webpage`, target);
@@ -61,31 +60,9 @@ const genExpressApi = (target) => {
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('ExpressJS REST API sablon created');
+  console.log('Make a config/default.json');
   console.log('Read docs/user_doc.md');
 }
-
-const updatePackageName = (filePath, newName) => {
-  const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-  if (content.name) {
-    content.name = newName;
-    fs.writeFileSync(filePath, JSON.stringify(content, null, 2));
-  }
-};
-
-const copyDir = (srcDir, destDir) => {
-  fs.mkdirSync(destDir, { recursive: true });
-
-  for (const item of fs.readdirSync(srcDir)) {
-    const srcPath = path.join(srcDir, item);
-    const destPath = path.join(destDir, item);
-
-    if (fs.statSync(srcPath).isDirectory()) {
-      copyDir(srcPath, destPath);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-    }
-  }
-};
 
 module.exports = {
   genWebpage, 
