@@ -1,4 +1,4 @@
-const Router = require('express')
+import Router from 'express'
 const router = Router()
 
 const AuthController = require('../controllers/authcontroller')
@@ -9,4 +9,4 @@ router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
 router.get('/users', [verifyToken], UserController.index)
  
-module.exports = router
+export default router

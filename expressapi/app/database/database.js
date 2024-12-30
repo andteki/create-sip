@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const config = require('../../config/default.json')
+import Sequelize from 'sequelize'
+import config from '../../config/default.json' assert { type: 'json' }
 
 if(config.app.log != false) {
     var log = console.log
@@ -19,4 +19,4 @@ const sequelize = new Sequelize(
     }
 )
  
-module.exports = sequelize
+export default sequelize

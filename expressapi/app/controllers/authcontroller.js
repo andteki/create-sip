@@ -1,8 +1,8 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const User = require('../models/user')
-const config = require('../../config/default.json')
- 
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
+import User from '../models/user.js'
+import config from '../../config/default.json' assert { type: 'json' }
+
 const AuthController = {
     async register(req, res) {        
         var clientError = false;
@@ -100,4 +100,4 @@ const AuthController = {
     }
 }
  
-module.exports = AuthController
+export default AuthController

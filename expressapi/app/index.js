@@ -1,9 +1,8 @@
-const express = require('express')
-const morgan = require('morgan')
-const app = express()
-const fs = require('fs')
-const router = require('./routes/api')
-const config = require('../config/default.json')
+import express from 'express'
+import morgan from 'morgan'
+import fs from 'fs'
+import router from './routes/api.js'
+import config from '../config/default.json' assert { type: 'json' }
 
 const PORT = config.app.port || 8000
 

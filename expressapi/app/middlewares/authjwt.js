@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const config = require('../../config/default.json')
- 
-exports.verifyToken = (req, res, next) => {
+import jwt from 'jsonwebtoken';
+import config from '../../config/default.json' assert { type: 'json' };
+
+const verifyToken = (req, res, next) => {
     let authData = req.headers.authorization;
     if(!authData) {
         return res.status(403).send({
@@ -20,3 +20,5 @@ exports.verifyToken = (req, res, next) => {
         next()
     })
 };
+
+export default verifyToken
