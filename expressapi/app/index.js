@@ -4,6 +4,8 @@ import fs from 'fs'
 import router from './routes/api.js'
 import config from '../config/default.json' assert { type: 'json' }
 
+const app = express()
+
 const PORT = config.app.port || 8000
 
 const logfile = 'access.log'

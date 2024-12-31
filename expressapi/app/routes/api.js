@@ -1,9 +1,9 @@
 import Router from 'express'
 const router = Router()
 
-const AuthController = require('../controllers/authcontroller')
-const UserController = require('../controllers/usercontroller')
-const { verifyToken } = require('../middlewares/authjwt')
+import AuthController from '../controllers/authcontroller.js';
+import UserController from '../controllers/usercontroller.js';
+import verifyToken from '../middlewares/authjwt.js';
  
 router.post('/register', AuthController.register)
 router.post('/login', AuthController.login)
