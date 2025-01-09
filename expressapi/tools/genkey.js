@@ -1,7 +1,11 @@
 import fs from 'fs/promises'
 import { generateApiKey } from 'generate-api-key'
+import path, { dirname } from 'path';
+import url from 'url';
 
-const fileName = new URL('../config/default.json', import.meta.url).pathname
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const fileName = path.join(__dirname, '../config/default.json');
 
 function generateKey(size = 32, format = 'base64') {
     const buffer = crypto.randomBytes(size);

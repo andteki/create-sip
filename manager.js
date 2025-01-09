@@ -60,8 +60,13 @@ const genExpressApi = (target) => {
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('ExpressJS REST API sablon created');
-  console.log('Make a config/default.json');
   console.log('Read docs/user_doc.md');
+  console.log('Run next commands:');
+  console.log(`  cd ${target}`);
+  console.log('  npm install');
+  console.log('  node tools/genconf.js');
+  console.log('  node tools/genkey.js');  
+  console.log('  npm run dev');
 }
 
 module.exports = {
