@@ -27,6 +27,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
+    "fs-extra": "^11.3.0",    
     "nodemon": "^2.0.22",
     "supertest": "^6.3.3"
   },
