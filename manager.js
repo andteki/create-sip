@@ -19,8 +19,9 @@ const genNodejs = (target) => {
   updatePackageName(`${target}/package.json`, target);
   console.log('Web client created');
   console.log('Run next commands:');
-  console.log('npm install');
-  console.log('npm start');
+  console.log(`  cd ${target}`);
+  console.log('  npm install');
+  console.log('  npm start');
 }
 
 const genWebEsbuildJs = (target) => {
@@ -28,11 +29,12 @@ const genWebEsbuildJs = (target) => {
   updatePackageName(`${target}/package.json`, target);
   console.log('ESBuild client created with Javascript');
   console.log('Run next commands:');
-  console.log('npm install');
-  console.log('npm run dev');
-  console.log('npm start');
+  console.log(`  cd ${target}`);
+  console.log('  npm install');
+  console.log('  npm run dev');
+  console.log('  npm start');
   console.log('If you want to build, run:');
-  console.log('npm run build');
+  console.log('  npm run build');
 }
 
 const genWebEsbuildTs = (target) => {
@@ -40,11 +42,12 @@ const genWebEsbuildTs = (target) => {
   updatePackageName(`${target}/package.json`, target);
   console.log('ESBuild client created with Typescript');
   console.log('Run next commands:');
-  console.log('npm install');
-  console.log('npm run dev');
-  console.log('npm start');
+  console.log(`  cd ${target}`);
+  console.log('  npm install');
+  console.log('  npm run dev');
+  console.log('  npm start');
   console.log('If you want to build, run:');
-  console.log('npm run build');
+  console.log('  npm run build');
 }
 
 const genMockApi = (target) => {
@@ -52,8 +55,9 @@ const genMockApi = (target) => {
   updatePackageName(`${target}/package.json`, target);
   console.log('MockAPI with hai-server 0.0.4');
   console.log('Run next commands:');
-  console.log('npm install');
-  console.log('npm start');
+  console.log(`  cd ${target}`);
+  console.log('  npm install');
+  console.log('  npm start');
 }
 
 const genExpressApi = (target) => {
