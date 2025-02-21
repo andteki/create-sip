@@ -55,7 +55,7 @@ const questions = [
         value: 'webesbuildts'
       },
       { 
-        title: 'MockAPI',
+        title: 'hai mock API',
         description: 'API server with hai-server 0.0.4',
         value: 'mockapi'
       },
@@ -106,7 +106,7 @@ const questions = [
     return;
   }
   if(res.type === 'mockapi') {
-    console.log('Create a new MockAPI server...');
+    console.log('Create a new hai mock API server...');
     genMockApi(res.name);
     return;
   }
