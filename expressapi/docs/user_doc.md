@@ -3,7 +3,7 @@
 ## Install dependencies
 
 ```cmd
-pnpm install
+npm install
 ```
 
 ## Copy config file
@@ -13,7 +13,7 @@ Copy **config/default.json.example** to **config/default.json** file.
 ## App key generation
 
 ```cmd
-node tools/genkey.js
+node op key:generate
 ```
 
 ## Database setup
@@ -55,3 +55,10 @@ You receive the bearear token with accessToken key.
 ## The users endpoint
 
 Send the bearer token.
+
+## Model and controller generation
+
+```cmd
+node op create model thing
+node op create controller thing
+```
