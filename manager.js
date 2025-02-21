@@ -68,8 +68,7 @@ const genExpressApi = (target) => {
   console.log('Run next commands:');
   console.log(`  cd ${target}`);
   console.log('  npm install');
-  console.log('  node tools/genconf.js');
-  console.log('  node tools/genkey.js');  
+  console.log('  node op key:generate');
   console.log('  npm run dev');
 }
 
