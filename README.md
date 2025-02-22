@@ -78,3 +78,11 @@ Default database type is sqlite :memory:. If you want to use another database, e
 ```
 
 Must be set the database path in the config/default.json file.
+
+### Default admin user
+
+Generate admin user:
+
+```bash
+node op admin:generate
+```
