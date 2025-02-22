@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
-import config from '../../config/default.json' assert { type: 'json' };
+import { readJson } from '../../tools/readjson.js'
+
+const config = await readJson('config/default.json')
 
 const verifyToken = (req, res, next) => {
     let authData = req.headers.authorization;

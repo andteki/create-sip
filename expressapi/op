@@ -4,12 +4,15 @@ import fs from 'fs-extra';
 import fsp from 'fs/promises'
 import { generateApiKey } from 'generate-api-key'
 
-console.log(process.argv[2])
+import bcrypt from 'bcryptjs';
+import path from 'path';
 
 if(process.argv.length == 3 && process.argv[2] == 'key:generate') {
   startGenerateKey();
 } else if(process.argv.length == 3 && process.argv[2] == 'conf:generate') {
   startGenerateConf();
+} else if(process.argv.length == 3 && process.argv[2] == 'admin:generate') {
+  startGenerateAdmin();
 } else if(process.argv.length < 4) {
   console.log('Usage:');
   console.log('node op <command> <type> <name>');
@@ -101,4 +104,47 @@ function startGenerateConf() {
   const destinationFileName = 'config/default.json';
   fs.copyFile(sourceFileName, destinationFileName)
       .catch(error => console.log(error));
+}
+
+async function loadConfig() {
+  try {
+    const filePath = path.resolve('./config/default.json');
+    const data = await fsp.readFile(filePath, 'utf8');
+    const config = JSON.parse(data);
+    return config;
+  } catch (error) {
+    console.error('Error loading config:', error);
+    return null;
+  }
+}
+
+async function startGenerateAdmin() {
+  console.log('Generate admin...')
+  try {
+    const config = await loadConfig();
+    const isMemoryDb = config.db.path === ':memory:';
+    if(isMemoryDb) {
+      console.log('Admin cannot be created in memory db!')
+    }else {
+      const { default: User } = await import('./app/models/user.js')
+      await User.sync()
+
+      const isUserExist = await User.findOne({ where: { name: 'admin' } })
+      if (isUserExist) {
+        console.log('Admin already exists!')
+        return;
+      }
+
+      const hashedPassword = await bcrypt.hash('admin', 10);
+      await User.create({
+        name: 'admin',
+        email: 'admin',
+        password: hashedPassword
+      })
+      console.log('Admin created!')
+    }
+  } catch( err) {
+    console.error('Error creating admin!')
+    console.error(err)
+  }
 }

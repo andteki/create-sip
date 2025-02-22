@@ -1,11 +1,12 @@
 import Sequelize from 'sequelize'
-import config from '../../config/default.json' assert { type: 'json' }
+import { readJson } from '../../tools/readjson.js'
+
+const config = await readJson('config/default.json')
 
 if(config.app.log != false) {
     var log = console.log
 }
 
-console.log(typeof console.log)
 const sequelize = new Sequelize(
     config.db.name,
     config.db.user, 

@@ -3,7 +3,9 @@ import morgan from 'morgan'
 import cors from 'cors'
 import fs from 'fs'
 import router from './routes/api.js'
-import config from '../config/default.json' assert { type: 'json' }
+import { readJson } from '../tools/readjson.js'
+
+const config = await readJson('config/default.json')
 
 const app = express()
 

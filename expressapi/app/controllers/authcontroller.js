@@ -1,7 +1,9 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
-import config from '../../config/default.json' assert { type: 'json' }
+import { readJson } from '../../tools/readjson.js'
+
+const config = await readJson('config/default.json')
 
 const AuthController = {
     async register(req, res) {        
