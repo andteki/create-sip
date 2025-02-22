@@ -7,6 +7,8 @@ import { generateApiKey } from 'generate-api-key'
 import bcrypt from 'bcryptjs';
 import path from 'path';
 
+import { read } from 'read'
+
 if(process.argv.length == 3 && process.argv[2] == 'key:generate') {
   startGenerateKey();
 } else if(process.argv.length == 3 && process.argv[2] == 'conf:generate') {
@@ -118,6 +120,15 @@ async function loadConfig() {
   }
 }
 
+async function inputPassword() {
+  const password = await read({
+    prompt: 'Password: ',
+    silent: true,
+    replace: '*'
+  })
+  return password
+}
+
 async function startGenerateAdmin() {
   console.log('Generate admin...')
   try {
@@ -134,8 +145,8 @@ async function startGenerateAdmin() {
         console.log('Admin already exists!')
         return;
       }
-
-      const hashedPassword = await bcrypt.hash('admin', 10);
+      const password = await inputPassword()
+      const hashedPassword = await bcrypt.hash(password, 10);
       await User.create({
         name: 'admin',
         email: 'admin',
