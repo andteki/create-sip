@@ -60,19 +60,31 @@ const ThingController = {
     },
     async update(req, res) {
         try {
-            ThingController.tryUpdate(req, res)
+            await ThingController.tryUpdate(req, res)
         }catch(error) {
-            res.status(500)
+            let actualMessage = '';
+            if(error.message == 'Fail! Record not found!') {
+                actualMessage = error.message
+                res.status(404)
+            }else {
+                res.status(500)
+                actualMessage = 'Fail! The query is failed!'
+            }
+            
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: actualMessage
             })
         }
     },
     async tryUpdate(req, res) {
-        const thing = await Thing.update(req.body, {
+        const recordNumber = await Thing.update(req.body, {
             where: { id: req.params.id }
         })
+        if(recordNumber == 0) {
+            throw new Error('Fail! Record not found!')
+        }
+        const thing = await Thing.findByPk(req.params.id)
         res.status(200)
         res.json({
             success: true,
