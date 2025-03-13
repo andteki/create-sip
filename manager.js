@@ -63,13 +63,16 @@ const genMockApi = (target) => {
 const genExpressApi = (target) => {
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
-  console.log('ExpressJS REST API sablon created');
+  console.log('ExpressJS REST API skeleton created');
   console.log('Read docs/user_doc.md');
   console.log('Run next commands:');
   console.log(`  cd ${target}`);
   console.log('  npm install');
   console.log('  node op key:generate');
   console.log('  npm run dev');
+  console.log('Usable commands:');
+  console.log('  node op create model thing');
+  console.log('  node op create controller thing');
 }
 
 module.exports = {
