@@ -14,10 +14,10 @@ Copy **config/default.json.example** to **config/default.json** file.
 
 ## APP KEY generation
 
-Run the genkey tools:
+Run the genkey:
 
 ```cmd
-node tools/genkey.js
+node op key:generate
 ```
 
 ## Database settings
@@ -44,7 +44,7 @@ After installing the appropriate dependencies, it can be used:
 * snowflake
 * oracle
 
-With the `sqlite` option, the database is stored in the `database.sqlite` file, or you can add :memory:, then the database is stored in memory.
+With the `sqlite` option, the usual path setting is `database.sqlite`. The default storage is :memory:, where data is stored in memory only.
 
 ## Starting
 
@@ -59,6 +59,17 @@ Run productum:
 ```cmd
 npm start
 ```
+
+## Model and controller creation
+
+You can generate a model and controller with the following commands:
+
+```bash
+node op create model thing
+node op create controller thing
+```
+
+The name after the model and controller statements must be given in the singular.
 
 ## Licence
 
