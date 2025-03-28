@@ -73,6 +73,8 @@ const genExpressApi = (target) => {
   console.log('Usable commands:');
   console.log('  node op create model thing');
   console.log('  node op create controller thing');
+  console.log('The model and controller names must be');
+  console.log('given in the singular');
 }
 
 module.exports = {

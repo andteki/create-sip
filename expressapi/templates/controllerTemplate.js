@@ -3,7 +3,7 @@ import Thing from '../models/thing.js'
 const ThingController = {
     async index(req, res) {
         try {
-            ThingController.tryIndex(req, res)
+            await ThingController.tryIndex(req, res)
         }catch(error) {
             res.status(500)
             res.json({
@@ -22,7 +22,7 @@ const ThingController = {
     },
     async show(req, res) {
         try {
-            ThingController.tryShow(req, res)
+            await ThingController.tryShow(req, res)
         }catch(error) {
             res.status(500)
             res.json({
@@ -41,7 +41,7 @@ const ThingController = {
     },
     async create(req, res) {
         try {
-            ThingController.tryCreate(req, res)
+            await ThingController.tryCreate(req, res)
         }catch(error) {
             res.status(500)
             res.json({
@@ -93,7 +93,7 @@ const ThingController = {
     },
     async destroy(req, res) {
         try {
-            ThingController.tryDestroy(req, res)
+            await ThingController.tryDestroy(req, res)
         }catch(error) {
             res.status(500)
             res.json({
