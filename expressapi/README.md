@@ -65,11 +65,46 @@ npm start
 You can generate a model and controller with the following commands:
 
 ```bash
-node op create model thing
-node op create controller thing
+node op make:model something
+node op make:controller something
 ```
 
-The name after the model and controller statements must be given in the singular.
+The name after the model and controller statements must be given in the singular. Controller generation automatically appends the "Controller" suffix.
+
+## Admin user
+
+The admin user can be created with the following command:
+
+```bash
+node op admin:generate
+```
+
+The command will prompt for the password.
+
+## Config generation
+
+The next command generates the default config file:
+
+```bash
+node op conf:generate
+```
+
+## Database seed
+
+The database can be seeded with the following command:
+
+```bash
+node op db:seed <model_name> <file_path>
+```
+
+The model name must be given in the singular and lowercase. The file extension must be:
+
+* .json
+* .csv
+
+The keys in the JSON file and the field names in the CSV file must match the model fields.
+
+If the CSV file contains quotation marks, they are automatically removed.
 
 ## Licence
 

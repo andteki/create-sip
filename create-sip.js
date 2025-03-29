@@ -61,7 +61,7 @@ const questions = [
       },
       { 
         title: 'Express API',
-        description: 'Express API with simple Sequelize',
+        description: 'Express API with simple Sequelize and ES modules',
         value: 'expressapi' 
       },
       { 
@@ -111,7 +111,7 @@ const questions = [
     return;
   }
   if(res.type === 'expressapi') {
-    console.log('Create a new Express API...');
+    console.log('Create a new Express API with ES modules...');
     genExpressApi(res.name);
     return;
   }

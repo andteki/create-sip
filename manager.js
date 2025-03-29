@@ -71,10 +71,11 @@ const genExpressApi = (target) => {
   console.log('  node op key:generate');
   console.log('  npm run dev');
   console.log('Usable commands:');
-  console.log('  node op create model thing');
-  console.log('  node op create controller thing');
+  console.log('  node op make:model something');
+  console.log('  node op make:controller something');
   console.log('The model and controller names must be');
-  console.log('given in the singular');
+  console.log('given in the singular. More info:');
+  console.log('  node op help')
 }
 
 module.exports = {
