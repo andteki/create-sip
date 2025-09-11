@@ -5,6 +5,7 @@ import { generateApiKey } from 'generate-api-key'
 import bcrypt from 'bcryptjs';
 import path from 'path';
 import { read } from 'read'
+import { start } from 'repl';
 
 if(process.argv.length == 3 && process.argv[2] == 'help') {
   console.log('Usable commands:');
@@ -75,6 +76,11 @@ async function copyController(className) {
 
   const src = 'templates/controllerTemplate.js'
   const dest = `app/controllers/${lowerName}controller.js`
+
+  if(await startCheckIfFileExists(dest)) {
+    process.exit(1);
+  }
+
   await fse.copy(src, dest)
 
   replace({
@@ -99,6 +105,10 @@ async function copyModel(className) {
   const src = 'templates/modelTemplate.js'
   const dest = `app/models/${lowerName}.js`
 
+  if(await startCheckIfFileExists(dest)) {
+    process.exit(1);
+  }
+
   await fse.copy(src, dest)
 
   replace({
@@ -111,6 +121,25 @@ async function copyModel(className) {
       replacement: className,
       paths: [dest]
   })
+}
+
+async function checkIfFileExists(filePath) {
+  return await fsp.access(filePath)
+      .then(() => true)
+      .catch(() => false);
+}
+
+async function startCheckIfFileExists(filePath) {
+  return await checkIfFileExists(filePath)
+      .then(exists => {
+          if (exists) {
+              console.log(`The file ${filePath} exists!`);
+              return true;
+          } else {
+              return false;
+          }
+      })
+      .catch(error => console.log(error));
 }
 
 function capitalizeFirstLetter(word) {
