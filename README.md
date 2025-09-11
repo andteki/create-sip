@@ -107,6 +107,12 @@ node op admin:generate
 
 Copy **config/default.json.example** to **config/default.json** file.
 
+Command:
+
+```bash
+node op conf:generate
+```
+
 ### Seed database
 
 Load data from JSON or CSV file.
