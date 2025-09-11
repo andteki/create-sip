@@ -1,20 +1,24 @@
-const { copyDir, updatePackageName } = require('./utils');
+const { copyDir, updatePackageName, checkIfDirExists } = require('./utils');
 const path = require('path');
 const dir = path.join(__dirname);
 
 const genWebpage = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/webpage`, target);
 }
 
 const genBootstrap = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/webbootstrap`, target);
 }
 
 const genJavascript = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/javascript`, target);
 }
 
 const genNodejs = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/webnodejs`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('Web client created');
@@ -25,6 +29,7 @@ const genNodejs = (target) => {
 }
 
 const genWebEsbuildJs = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/webesbuildjs`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('ESBuild client created with Javascript');
@@ -38,6 +43,7 @@ const genWebEsbuildJs = (target) => {
 }
 
 const genWebEsbuildTs = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/webesbuildts`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('ESBuild client created with Typescript');
@@ -51,6 +57,7 @@ const genWebEsbuildTs = (target) => {
 }
 
 const genMockApi = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/mockapi`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('MockAPI with hai-server 0.0.4');
@@ -61,6 +68,7 @@ const genMockApi = (target) => {
 }
 
 const genExpressApi = (target) => {
+  checkIfDirExists(target);
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('ExpressJS REST API skeleton created');

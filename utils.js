@@ -24,7 +24,16 @@ const copyDir = (srcDir, destDir) => {
   }
 };
 
+const checkIfDirExists = (dirPath) => {
+  if (fs.existsSync(dirPath)) {
+    console.error('Error!');
+    console.error(`Directory already exists: ${dirPath}`);
+    process.exit(1);
+  }
+};
+
 module.exports = {
   updatePackageName,
   copyDir,
+  checkIfDirExists
 };
