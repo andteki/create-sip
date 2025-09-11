@@ -22,6 +22,22 @@ npm create sip@latest
 * Write project name.
 * Select project type.
 
+Options:
+
+```txt
+✔ Project name:  … vmi
+? Project type:  › - Use arrow-keys. Return to submit.
+    Webpage
+    Web Bootstrap
+    JavaScript
+    Web Node.js
+    ESBuild JavaScript
+    ESBuild TypeScript
+    hai mock API
+    Express API
+❯   Cancel  
+```
+
 ## Express API
 
 Key generation:
@@ -85,4 +101,72 @@ Generate admin user:
 
 ```bash
 node op admin:generate
+```
+
+### Copy default config file
+
+Copy **config/default.json.example** to **config/default.json** file.
+
+### Seed database
+
+Load data from JSON or CSV file.
+
+Examples:
+
+```bash
+node op db:seed thing somethings.json
+node op db:seed thing somethings.csv
+```
+
+For example JSON file:
+
+employees.json:
+
+```json
+[
+    { "id": 1, "name": "Tom Large" },
+    { "id": 2, "name": "Jack Small" }
+]
+```
+
+The default separator is comma.
+
+```cmd
+node op db:seed employee employees.json
+```
+
+For example CSV file:
+
+employees.csv:
+
+```csv
+id,name
+1,Joe Kitin
+2,Peter Fall
+```
+
+If you have colon separator, use sep parameter.
+
+```csv
+id:name
+1:Joe Kitin
+2:Peter Fall
+```
+
+```cmd
+node op db:seed employee employees.csv --sep :
+```
+
+If the file has semicolon separator, use sep parameter, for example:
+
+```csv
+id;name
+1;Joe Kitin
+2;Peter Fall
+```
+
+Use next command:
+
+```cmd
+node op db:seed employee employees.csv --sep ";"
 ```

@@ -1,11 +1,10 @@
-import replace from 'replace'
-import fse from 'fs-extra'
-import fsp from 'fs/promises'
-import { generateApiKey } from 'generate-api-key'
+import replace from 'replace';
+import fse from 'fs-extra';
+import fsp from 'fs/promises';
+import { generateApiKey } from 'generate-api-key';
 import bcrypt from 'bcryptjs';
 import path from 'path';
-import { read } from 'read'
-import { start } from 'repl';
+import { read } from 'read';
 
 if(process.argv.length == 3 && process.argv[2] == 'help') {
   console.log('Usable commands:');
@@ -14,7 +13,7 @@ if(process.argv.length == 3 && process.argv[2] == 'help') {
   console.log('  node op key:generate');
   console.log('  node op conf:generate');
   console.log('  node op admin:generate');
-  console.log('  node op db:seed <model> <filePath>');
+  console.log('  node op db:seed <model> <filePath> [sep]');
   process.exit(0);
 } else if(process.argv.length == 3 && process.argv[2] == 'key:generate') {
   startGenerateKey();
@@ -25,14 +24,23 @@ if(process.argv.length == 3 && process.argv[2] == 'help') {
 } else if(process.argv[2] === 'db:seed') {
   if(process.argv.length < 5) {
       console.log('Usage:');
-      console.log('node op db:seed <model> <filePath>');
+      console.log('node op db:seed <model> <filePath> [sep]');
       console.log('Examples:');
       console.log('node op db:seed thing somethings.json');
       console.log('node op db:seed thing somethings.csv');
+      console.log('node op db:seed thing somethings.csv ,');
+      console.log('node op db:seed thing somethings.csv :');
+      console.log('node op db:seed thing somethings.csv ";"');
   }
   const model = process.argv[3];
   const filePath = process.argv[4];
-  runSeed(model, filePath);
+  if(process.argv.length == 6) {
+    const sep = process.argv[5];
+    runSeed(model, filePath, sep);
+  }else {
+    runSeed(model, filePath);
+  }
+  
 } else if(process.argv[2] === 'make:model') {
   if(process.argv.length < 4) {
       console.log('Usage:');
@@ -234,8 +242,7 @@ const seedFromJson = async (model, filePath) => {
   }
 }
 
-const seedFromCsv = async (model, filePath) => {
-  const sep = ','
+const seedFromCsv = async (model, filePath, sep) => {
   try {
       const data = await fsp.readFile(filePath, 'utf8')
       const clearData = data.replace(/"/g, '').trim()
@@ -260,10 +267,10 @@ const seedFromCsv = async (model, filePath) => {
   }
 }
 
-async function runSeed(model, filePath) {
+async function runSeed(model, filePath, sep=',') {
   
   if(!filePath || !model) {
-      console.log('Usage: node seed.js <modelName> <filePath>')
+      console.log('Usage: node seed.js <modelName> <filePath> [sep]')
       process.exit(1)
   }
   
@@ -299,7 +306,7 @@ async function runSeed(model, filePath) {
       await sequelize.sync({ force: true })
       await sequelize.authenticate()
       if(ext === '.csv') {
-          await seedFromCsv(modelObject, filePath)
+          await seedFromCsv(modelObject, filePath, sep)
       }else {
           await seedFromJson(modelObject, filePath)
       }        
