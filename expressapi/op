@@ -83,7 +83,7 @@ async function copyController(className) {
   const lowerName = className.toLowerCase()
 
   const src = 'templates/controllerTemplate.js'
-  const dest = `app/controllers/${lowerName}controller.js`
+  const dest = `app/controllers/${lowerName}Controller.js`
 
   if(await startCheckIfFileExists(dest)) {
     process.exit(1);

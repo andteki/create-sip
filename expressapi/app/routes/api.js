@@ -1,8 +1,8 @@
 import Router from 'express'
 const router = Router()
 
-import AuthController from '../controllers/authcontroller.js';
-import UserController from '../controllers/usercontroller.js';
+import AuthController from '../controllers/authController.js';
+import UserController from '../controllers/userController.js';
 import verifyToken from '../middlewares/authjwt.js';
  
 router.post('/register', AuthController.register)

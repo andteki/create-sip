@@ -8,7 +8,8 @@ const ThingController = {
             res.status(500)
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: 'Error! The query is failed!',
+                error: error.message
             })
         }
     },
@@ -27,7 +28,8 @@ const ThingController = {
             res.status(500)
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: 'Error! The query is failed!',
+                error: error.message
             })
         }
     },
@@ -46,7 +48,8 @@ const ThingController = {
             res.status(500)
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: 'Error! The query is failed!',
+                error: error.message
             })
         }
     },
@@ -98,7 +101,8 @@ const ThingController = {
             res.status(500)
             res.json({
                 success: false,
-                message: 'Error! The query is failed!'
+                message: 'Error! The query is failed!',
+                error: error.message
             })
         }
     },
