@@ -1,5 +1,5 @@
 import User from './user.js';
-import sequelize from './database/database.js'
+import sequelize from '../database/database.js'
 
 const db = {};
 
