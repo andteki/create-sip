@@ -41,9 +41,9 @@ const ThingController = {
             data: thing
         })
     },
-    async create(req, res) {
+    async store(req, res) {
         try {
-            await ThingController.tryCreate(req, res)
+            await ThingController.tryStore(req, res)
         }catch(error) {
             res.status(500)
             res.json({
@@ -53,7 +53,7 @@ const ThingController = {
             })
         }
     },
-    async tryCreate(req, res) {
+    async tryStore(req, res) {
         const thing = await Thing.create(req.body)
         res.status(201)
         res.json({
