@@ -1,3 +1,5 @@
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 import replace from 'replace';
 import fse from 'fs-extra';
 import fsp from 'fs/promises';
@@ -6,78 +8,162 @@ import bcrypt from 'bcryptjs';
 import path from 'path';
 import { read } from 'read';
 
-if(process.argv.length == 3 && process.argv[2] == 'help') {
-  console.log('Usable commands:');
-  console.log('  node op make:model <name>');
-  console.log('  node op make:controller <name>');
-  console.log('  node op key:generate');
-  console.log('  node op conf:generate');
-  console.log('  node op admin:generate');
-  console.log('  node op db:seed <model> <filePath> [sep]');
-  process.exit(0);
-} else if(process.argv.length == 3 && process.argv[2] == 'key:generate') {
-  startGenerateKey();
-} else if(process.argv.length == 3 && process.argv[2] == 'conf:generate') {
-  startGenerateConf();
-} else if(process.argv.length == 3 && process.argv[2] == 'admin:generate') {
-  startGenerateAdmin();
-} else if(process.argv[2] === 'db:seed') {
-  if(process.argv.length < 5) {
-      console.log('Usage:');
-      console.log('node op db:seed <model> <filePath> [sep]');
-      console.log('Examples:');
-      console.log('node op db:seed thing somethings.json');
-      console.log('node op db:seed thing somethings.csv');
-      console.log('node op db:seed thing somethings.csv ,');
-      console.log('node op db:seed thing somethings.csv :');
-      console.log('node op db:seed thing somethings.csv ";"');
+const { argv } = yargs(hideBin(process.argv))
+.version()
+.usage('Használat: node op <command>  [name]')
+.help()
+.demandCommand(1, 'Not enough arguments!')
+.command('make:model <name>',
+  'Generates a new Sequelize model',
+  (yargs) => {
+    return yargs
+      .positional('name', {
+        type: 'string',
+        description: 'Name of the model'
+      })
+  },
+  async (argv) => {
+    const { name } = argv;
+    await copyModel(name);
   }
-  const model = process.argv[3];
-  const filePath = process.argv[4];
-  if(process.argv.length == 6) {
-    const sep = process.argv[5];
-    runSeed(model, filePath, sep);
-  }else {
-    runSeed(model, filePath);
+)
+.command('make:controller <name>',
+  'Generates a new controller',
+  (yargs) => {
+    return yargs
+      .positional('name', {
+        type: 'string',
+        description: 'Name of the controller'
+      })
+  },
+  async (argv) => {
+    const { name } = argv;
+    await copyController(name);
   }
-  
-} else if(process.argv[2] === 'make:model') {
-  if(process.argv.length < 4) {
-      console.log('Usage:');
-      console.log('node op make:model <name>');
-      console.log('Examples:');
-      console.log('node op make:model something');
+)
+.command('key:generate',
+  'Generates a new API key',
+  (yargs) => {
+    return yargs
+  },
+  async (argv) => {
+    startGenerateKey();
   }
-  copyModel(process.argv[3]);
+)
+.command('conf:generate',
+  'Generates a new config file',
+  (yargs) => {
+    return yargs
+  },
+  async (argv) => {
+    startGenerateConf();
+  }
+)
+.command('admin:generate',
+  'Generates a new admin user',
+  (yargs) => {
+    return yargs
+  },
+  async (argv) => {
+    startGenerateAdmin();
+  }
+)
+.command('db:import <model> <filePath> [sep]',
+  `Import CSV or JSON file to database table
 
-} else if(process.argv[2] === 'make:controller') {
-  if(process.argv.length < 4) {
-      console.log('Usage:');
-      console.log('node op make:controller <name>');
-      console.log('Examples:');
-      console.log('node op make:controller something');
-  }
-  copyController(process.argv[3]);
+Examples:
+node op db:import thing somethings.json
+node op db:import thing somethings.csv
+node op db:import thing somethings.csv ,
+node op db:import thing somethings.csv :
+node op db:import thing somethings.csv ";"
 
-} else if(process.argv.length < 4) {
-  console.log('Usage:');
-  console.log('node op <command> <type> <name>');
-  console.log('Example:');
-  console.log('node op create model something');
-  console.log('node op create controller something');
-  console.log('node op key:generate');
-  process.exit(1);
-} else {
-  if(process.argv[2] === 'create') {
-    console.log('Create a new ' + process.argv[3] + '...');
-    if(process.argv[3] === 'model') {
-      copyModel(process.argv[4]);
-    }
-    if(process.argv[3] === 'controller') {
-      copyController(process.argv[4]);
-    }
+In CSV file the field names must match the model fields.
+  `,
+  (yargs) => {
+    return yargs
+      .positional('model', {
+        type: 'string',
+        description: 'Name of the model'
+      })
+      .positional('filePath', {
+        type: 'string',
+        description: 'Path to the file'
+      })
+      .positional('sep', {
+        type: 'string',
+        description: 'Separator for the CSV file'
+      })
+  },
+  async (argv) => {
+    const { model, filePath, sep } = argv;
+    await runImportData(model, filePath, sep);
   }
-}
+)
+.command('make:migration <name>',
+  'Generates a new migration file',
+  (yargs) => {
+    return yargs
+      .positional('name', {
+        type: 'string',
+        description: 'Name of the migration'
+      })
+  },
+  async (argv) => {
+    const { name } = argv;
+    await createMigration(name);
+  }
+)
+.command('migration:run [migrationName]',
+  'Runs migrations',
+  (yargs) => {
+    return yargs
+      .positional('migrationName', {
+        type: 'string',
+        description: 'Name of the migration'
+      })
+  },
+  async (argv) => {
+    const { migrationName } = argv;
+    await startMigrations(migrationName);
+  }
+)
+.command('migration:rollback',
+  'Rolls back migrations',
+  (yargs) => {
+    return yargs
+      .options({
+        step: {
+          type: 'number',
+          description: 'Number of migrations to rollback',
+          default: 1
+        }
+      })
+  },
+  async (argv) => {
+    const { step } = argv;
+    await rollbackMigrations(step);
+  }
+)
+.command('migration:fresh',
+  'Rolls back all migrations',
+  (yargs) => {
+    return yargs
+  },
+  async (argv) => {
+    await freshMigrations();
+  }
+)
+.command('migration:reset',
+  'Rolls back all migrations',
+  (yargs) => {
+    return yargs
+  },
+  async (argv) => {
+    await resetMigrations();
+  }
+)
+.parse();
 
 async function copyController(className) {
   const lowerName = className.toLowerCase()
@@ -232,17 +318,17 @@ async function startGenerateAdmin() {
   }
 }
 
-const seedFromJson = async (model, filePath) => {
+const importFromJson = async (model, filePath) => {
   try {
       const data = JSON.parse(await fsp.readFile(filePath, 'utf8'))
       await model.bulkCreate(data)
-      console.log(`Data seeded successfully! ${model.name}`)
+      console.log(`Data imported successfully! ${model.name}`)
   } catch (error) {
       console.error(error)
   }
 }
 
-const seedFromCsv = async (model, filePath, sep) => {
+const importFromCsv = async (model, filePath, sep) => {
   try {
       const data = await fsp.readFile(filePath, 'utf8')
       const clearData = data.replace(/"/g, '').trim()
@@ -261,16 +347,16 @@ const seedFromCsv = async (model, filePath, sep) => {
       })
 
       await model.bulkCreate(dataToInsert)
-      console.log(`Data seeded successfully! ${model.name}`)
+      console.log(`Data imported successfully! ${model.name}`)
   } catch (error) {
       console.error(error)
   }
 }
 
-async function runSeed(model, filePath, sep=',') {
+async function runImportData(model, filePath, sep=',') {
   
   if(!filePath || !model) {
-      console.log('Usage: node seed.js <modelName> <filePath> [sep]')
+      console.log('Usage: node db:import <modelName> <filePath> [sep]')
       process.exit(1)
   }
   
@@ -306,12 +392,107 @@ async function runSeed(model, filePath, sep=',') {
       await sequelize.sync({ force: true })
       await sequelize.authenticate()
       if(ext === '.csv') {
-          await seedFromCsv(modelObject, filePath, sep)
+          await importFromCsv(modelObject, filePath, sep)
       }else {
-          await seedFromJson(modelObject, filePath)
+          await importFromJson(modelObject, filePath)
       }        
   } catch (error) {
       console.error(error)
   }
 
+}
+
+async function createMigration(name) {
+  console.log('Create a new migration...', name)
+
+  const lowerName = name.toLowerCase()
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
+  const timestamp = `${year}_${month}_${day}_${hours}${minutes}${seconds}`
+
+  const migrationName = `${timestamp}_${lowerName}`
+
+  const src = 'templates/migrationTemplate.js'
+  const dest = `database/migrations/${migrationName}.js`
+
+  if(await startCheckIfFileExists(dest)) {
+    process.exit(1);
+  }
+
+  await fse.copy(src, dest)
+
+  replace({
+      regex: 'thing',
+      replacement: name,
+      paths: [dest]
+  }) 
+
+}
+
+async function getUmzug() {
+  const { default: sequelize } = await import('./app/database/database.js')
+  const { Umzug, SequelizeStorage } = await import('umzug')
+
+  const umzug = new Umzug({
+    migrations: { glob: './database/migrations/*.js' },
+    context: sequelize.getQueryInterface(),
+    storage: new SequelizeStorage({ sequelize }),
+    logger: console
+  })
+
+  return umzug
+}
+
+async function startMigrations(name) {
+  if(name) {
+    await runOneMigration(name)
+  } else {
+    await runMigrations()
+  }
+}
+
+async function runOneMigration(name) {
+  console.log('Run one migration...', name)
+
+  if(!name.endsWith('.js')) {
+    name += '.js'
+  }
+
+  const migrationPath = `database/migrations/${name}`
+  if(!await startCheckIfFileExists(migrationPath)) {
+    console.log(`The migration file ${migrationPath} not already exists.`)
+    process.exit(1)
+  }
+
+  const umzug = await getUmzug()
+  await umzug.up()
+}
+
+async function runMigrations() {
+  console.log('Run migrations...')
+  const umzug = await getUmzug()
+  await umzug.up()
+}
+
+async function resetMigrations() {
+  console.log('Reset migrations...')
+  const umzug = await getUmzug()
+  await umzug.down({ to: 0 })
+}
+
+async function freshMigrations() {
+  console.log('Fresh migrations...')
+  await resetMigrations()
+  await runMigrations()
+}
+
+async function rollbackMigrations(step = 1) {
+  console.log('Rollback migrations...')
+  const umzug = await getUmzug()
+  await umzug.down({ step: step })
 }

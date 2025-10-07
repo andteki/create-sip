@@ -62,3 +62,36 @@ Send the bearer token.
 node op create model thing
 node op create controller thing
 ```
+
+## Key generation
+
+```cmd
+node op key:generate
+```
+
+## Generate admin user
+
+```cmd
+node op admin:generate
+```
+
+## Database import
+
+```cmd
+node op db:import thing things.json
+node op db:import thing things.csv
+node op db:import thing things.csv ,
+node op db:import thing things.csv ";"
+node op db:import thing things.csv :
+```
+
+## Migration
+
+```cmd
+node op make:migration thing
+node op migrate:run
+node op migrate:fresh
+node op migrate:rollback
+node op migrate:rollback --step 2
+node op migrate:reset
+```

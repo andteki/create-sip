@@ -89,12 +89,12 @@ The next command generates the default config file:
 node op conf:generate
 ```
 
-## Database seed
+## Database import
 
 The database can be seeded with the following command:
 
 ```bash
-node op db:seed <model_name> <file_path>
+node op db:import <model_name> <file_path>
 ```
 
 The model name must be given in the singular and lowercase. The file extension must be:
@@ -105,6 +105,50 @@ The model name must be given in the singular and lowercase. The file extension m
 The keys in the JSON file and the field names in the CSV file must match the model fields.
 
 If the CSV file contains quotation marks, they are automatically removed.
+
+## Migration
+
+Generate a migration:
+
+```bash
+node op make/migration thing
+```
+
+Run all migration:
+
+```bash
+node op migration:run
+```
+
+Run a migration:
+
+```bash
+node op migration:run <migration_name>
+```
+
+Rollback a migration:
+
+```bash
+node op migration:rollback
+```
+
+Rollback two migrations:
+
+```bash
+node op migration:rollback 2
+```
+
+Reset the database:
+
+```bash
+node op migration:reset
+```
+
+Reset the database and run all migrations:
+
+```bash
+node op migration:fresh
+```
 
 ## Licence
 
