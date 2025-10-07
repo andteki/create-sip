@@ -113,16 +113,21 @@ Command:
 node op conf:generate
 ```
 
-### Seed database
+### Database import
 
 Load data from JSON or CSV file.
 
 Examples:
 
 ```bash
-node op db:seed thing somethings.json
-node op db:seed thing somethings.csv
+node op db:import thing somethings.json
+node op db:import thing somethings.csv
+node op db:import thing somethings.csv :
+node op db:import thing somethings.csv ";"
+node op db:import thing somethings.csv ,
 ```
+
+The last option is the separator.
 
 For example JSON file:
 
@@ -138,7 +143,7 @@ employees.json:
 The default separator is comma.
 
 ```cmd
-node op db:seed employee employees.json
+node op db:import employee employees.json
 ```
 
 For example CSV file:
@@ -160,7 +165,7 @@ id:name
 ```
 
 ```cmd
-node op db:seed employee employees.csv --sep :
+node op db:import employee employees.csv --sep :
 ```
 
 If the file has semicolon separator, use sep parameter, for example:
@@ -174,5 +179,34 @@ id;name
 Use next command:
 
 ```cmd
-node op db:seed employee employees.csv --sep ";"
+node op db:import employee employees.csv --sep ";"
 ```
+
+## Migration
+
+Generate migration:
+
+```bash
+node op make:migration <name>
+```
+
+Run migration:
+
+```bash
+node op migration:run
+```
+
+Reset database:
+
+```bash
+node op migration:reset
+```
+
+Rollback migrations:
+
+```bash
+node op migration:rollback
+node op migration:rollback --step 2
+```
+
+The steop option is the number of migrations to rollback.
