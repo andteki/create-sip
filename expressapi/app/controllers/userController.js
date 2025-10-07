@@ -88,7 +88,42 @@ const UserController = {
             data: userData
         })
     },
-
+    async updatePassword(req, res) {
+        var clientError = false;
+        try {
+            if(!req.body.password ||
+                !req.body.password_confirmation) {
+                clientError = true
+                throw new Error('Error! Bad request data!')
+            }
+            if(req.body.password != req.body.password_confirmation) {
+                clientError = true
+                throw new Error('Error! The two password is not same!')
+            }
+            await UserController.tryUpdatePassword(req, res)
+        }catch(error) {
+            if (clientError) {
+                res.status(400)
+            }else {
+                res.status(500)
+            }
+            res.json({
+                success: false,
+                message: 'Error! The query is failed!',
+                error: error.message
+            })
+        }
+    },
+    async tryUpdatePassword(req, res) {
+        const user = await User.findByPk(req.params.id)
+        user.password = bcrypt.hashSync(req.body.password)
+        await user.save()
+        res.status(200)
+        res.json({
+            success: true,
+            data: user
+        })
+    }
 }
 
 export default UserController
