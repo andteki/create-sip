@@ -1,6 +1,6 @@
-# sip expressapi sabon
+# sip expressapi template
 
-Express based REST API sablon
+Express based REST API template
 
 ## Install
 
@@ -105,6 +105,28 @@ The model name must be given in the singular and lowercase. The file extension m
 The keys in the JSON file and the field names in the CSV file must match the model fields.
 
 If the CSV file contains quotation marks, they are automatically removed.
+
+## Database synchronization
+
+Models and database tables can be synchronized, but this can be dangerous.
+
+Database synchronization can be set up in the app/models/modrels.js file. Default values are:
+
+```js
+{ alter: true }
+```
+
+This preserves the data and existing structure.
+
+Possible values:
+
+```js
+{ force: true }
+```
+
+The latter deletes the contents of the database table!
+
+If the value is false, there is no synchronization in either case.
 
 ## Migration
 

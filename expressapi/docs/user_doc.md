@@ -85,13 +85,70 @@ node op db:import thing things.csv ";"
 node op db:import thing things.csv :
 ```
 
-## Migration
+## Database
 
-```cmd
-node op make:migration thing
-node op migrate:run
-node op migrate:fresh
-node op migrate:rollback
-node op migrate:rollback --step 2
-node op migrate:reset
+### Database synchronization
+
+Models and database tables can be synchronized, but this can be dangerous.
+
+Database synchronization can be set up in the app/models/modrels.js file. Default values are:
+
+```js
+{ alter: true }
+```
+
+This preserves the data and existing structure.
+
+Possible values:
+
+```js
+{ force: true }
+```
+
+The latter deletes the contents of the database table!
+
+If the value is false, there is no synchronization in either case.
+
+### Migration
+
+Generate a migration:
+
+```bash
+node op make/migration thing
+```
+
+Run all migration:
+
+```bash
+node op migration:run
+```
+
+Run a migration:
+
+```bash
+node op migration:run <migration_name>
+```
+
+Rollback a migration:
+
+```bash
+node op migration:rollback
+```
+
+Rollback two migrations:
+
+```bash
+node op migration:rollback 2
+```
+
+Reset the database:
+
+```bash
+node op migration:reset
+```
+
+Reset the database and run all migrations:
+
+```bash
+node op migration:fresh
 ```
