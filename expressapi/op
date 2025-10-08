@@ -8,11 +8,12 @@ import bcrypt from 'bcryptjs';
 import path from 'path';
 import { read } from 'read';
 
-const { argv } = yargs(hideBin(process.argv))
+yargs(hideBin(process.argv))
 .version()
+.strict()
 .usage('Használat: node op <command>  [name]')
 .help()
-.demandCommand(1, 'Not enough arguments!')
+.demandCommand(2, 'Not enough arguments!')
 .command('make:model <name>',
   'Generates a new Sequelize model',
   (yargs) => {
@@ -51,7 +52,7 @@ const { argv } = yargs(hideBin(process.argv))
   }
 )
 .command('conf:generate',
-  'Generates a new config file',
+  'Generates a new config file: config/default.json from config/default.json.example',
   (yargs) => {
     return yargs
   },
@@ -60,7 +61,7 @@ const { argv } = yargs(hideBin(process.argv))
   }
 )
 .command('admin:generate',
-  'Generates a new admin user',
+  'Generates a new admin user in database table: users',
   (yargs) => {
     return yargs
   },
@@ -258,6 +259,9 @@ async function startGenerateConf() {
   console.log('Generate conf...');
   const sourceFileName = 'config/default.json.example';
   const destinationFileName = 'config/default.json';
+  if(await startCheckIfFileExists(destinationFileName)) {
+    process.exit(1);
+  }
   try {
     await fse.copyFile(sourceFileName, destinationFileName)
   } catch (error) {
