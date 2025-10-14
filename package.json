@@ -1,6 +1,6 @@
 {
   "name": "create-sip",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "main": "index.js",
   "bin": {
     "create-sip": "create-sip.js"
@@ -30,6 +30,8 @@
     "manager.js",
     "utils.js",
     "expressapi",
+    "expressapi/.env",
+    "expressapi/.gitignore",
     "javascript",
     "mockapi",
     "webbootstrap",
