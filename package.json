@@ -24,5 +24,18 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/andteki/create-sip.git"
-  }
+  },
+  "files": [
+    "create-sip.js",
+    "manager.js",
+    "utils.js",
+    "express-api",
+    "javascript",
+    "mocakapi",
+    "webbootstrap",
+    "webesbuildjs",
+    "webesbuildts",
+    "webnodejs",
+    "webpage"
+  ]
 }
