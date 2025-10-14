@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { readJson } from '../../tools/readjson.js'
-
-const config = await readJson('config/default.json')
+import dotenv from '@dotenvx/dotenvx'
+dotenv.config({ quiet: true })
 
 const verifyToken = (req, res, next) => {
     let authData = req.headers.authorization;
@@ -12,7 +11,7 @@ const verifyToken = (req, res, next) => {
     }
     let token = authData.split(' ')[1];
  
-    jwt.verify(token, config.app.key, (err, decoded) => {
+    jwt.verify(token, process.env.APP_KEY, (err, decoded) => {
         if(err) {
             return res.status(401).send({
                 message: "Unauthorized!"

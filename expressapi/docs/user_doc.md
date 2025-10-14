@@ -2,15 +2,37 @@
 
 ## Install dependencies
 
+Dependencies must be installed before use.
+
 ```cmd
 npm install
 ```
 
-## Copy config file
+Or use your favorite package manager.
 
-Copy **config/default.json.example** to **config/default.json** file.
+## Generate config file
+
+The settings are located in a file called:
+
+* .env
+
+To generate the .env file:
+
+```cmd
+node op conf:generate
+```
+
+### Test configurations file generate
+
+```cmd
+node op testconf:generate
+```
+
+Result: .env.test file.
 
 ## App key generation
+
+Te generate the application key:
 
 ```cmd
 node op key:generate
@@ -18,7 +40,7 @@ node op key:generate
 
 ## Database setup
 
-Edit the config/default.json file.
+Edit the .env file.
 
 ## Endpoints
 
@@ -29,6 +51,8 @@ All endpoint have a /api prefix.
 | /register | POST  | no |  create user |
 | /login    | POST  | no |  login  |
 | /users    | GET   | yes |  read users |
+| /users/:id | GET  | yes | read user |
+| /users/:id/password | PUT  | yes | change password |
 
 ## The register endpoint
 
@@ -54,16 +78,20 @@ You receive the bearear token with accessToken key.
 
 ## The users endpoint
 
-Send the bearer token.
+To query users or user, send the bearer token to endpoint.
 
 ## Model and controller generation
 
+Use the following instructions to generate models and controllers:
+
 ```cmd
-node op create model thing
-node op create controller thing
+node op make:model thing
+node op make:controller thing
 ```
 
 ## Key generation
+
+You can generate the application key with the following command:
 
 ```cmd
 node op key:generate
@@ -71,11 +99,15 @@ node op key:generate
 
 ## Generate admin user
 
+You can create an admin user if it does not already exist in the database:
+
 ```cmd
 node op admin:generate
 ```
 
 ## Database import
+
+It is possible to import data from JSON and CSV files.
 
 ```cmd
 node op db:import thing things.json
@@ -83,6 +115,61 @@ node op db:import thing things.csv
 node op db:import thing things.csv ,
 node op db:import thing things.csv ";"
 node op db:import thing things.csv :
+```
+
+The last option is the separator.
+
+For example JSON file:
+
+employees.json:
+
+```json
+[
+    { "id": 1, "name": "Tom Large" },
+    { "id": 2, "name": "Jack Small" }
+]
+```
+
+The default separator is comma.
+
+```cmd
+node op db:import employee employees.json
+```
+
+For example CSV file:
+
+employees.csv:
+
+```csv
+id,name
+1,Joe Kitin
+2,Peter Fall
+```
+
+If you have colon separator, use sep parameter.
+
+```csv
+id:name
+1:Joe Kitin
+2:Peter Fall
+```
+
+```cmd
+node op db:import employee employees.csv --sep :
+```
+
+If the file has semicolon separator, use sep parameter, for example:
+
+```csv
+id;name
+1;Joe Kitin
+2;Peter Fall
+```
+
+Use next command:
+
+```cmd
+node op db:import employee employees.csv --sep ";"
 ```
 
 ## Database

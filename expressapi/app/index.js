@@ -1,23 +1,9 @@
-import express from 'express'
-import morgan from 'morgan'
-import cors from 'cors'
-import fs from 'fs'
-import router from './routes/api.js'
-import { readJson } from '../tools/readjson.js'
-import './models/modrels.js'
+import app from './app.js'
+import dotenv from '@dotenvx/dotenvx'
 
-const config = await readJson('config/default.json')
+dotenv.config({ quiet: true })
 
-const app = express()
-
-const PORT = config.app.port || 8000
-
-const logfile = 'access.log'
-var accessLogStream = fs.createWriteStream(logfile, { flags: 'a' })
-app.use(morgan('dev', { stream: accessLogStream }))
-app.use(cors())
-app.use(express.json())
-app.use('/api', router);
+const PORT = process.env.APP_PORT || 8000
 
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`)

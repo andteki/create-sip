@@ -1,23 +1,23 @@
 import Sequelize from 'sequelize'
-import { readJson } from '../../tools/readjson.js'
+import dotenv from '@dotenvx/dotenvx'
 
-const config = await readJson('config/default.json')
-
-if(config.app.log != false) {
-    var log = console.log
+if (process.env.NODE_ENV === 'test') {
+    dotenv.config({ path: '.env.test', quiet: true })
+}else {
+    dotenv.config({ quiet: true })    
 }
 
 const sequelize = new Sequelize(
-    config.db.name,
-    config.db.user, 
-    config.db.pass,
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASS,
     {
-        logging: log,
-        dialect: config.db.dialect,
-        storage: config.db.path,
-        host: config.db.host,
+        dialect: process.env.DB_DIALECT,
+        storage: process.env.DB_STORAGE,
+        host: process.env.DB_HOST,
+        logging: process.env.APP_LOG === 'true' ? console.log : false,
         dialectOptions: {}
     }
 )
- 
+
 export default sequelize

@@ -61,7 +61,7 @@ const questions = [
       },
       { 
         title: 'Express API',
-        description: 'Express API with simple Sequelize and ES modules',
+        description: 'Express API using Sequelize and ES modules',
         value: 'expressapi' 
       },
       { 

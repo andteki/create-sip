@@ -1,14 +1,13 @@
-const supertest = require('supertest')
+import supertest from 'supertest'
+import app from '../app/app.js'
 
-describe('GET /api/users', () => {
-
-    const host = 'http://localhost:8000/api' 
+describe('/api/register and /api/login', () => {
     const restype= 'application/json; charset=utf-8'
     var token = null
 
     it('post /register ', function(done) {
-      supertest(host)
-        .post('/register')
+      supertest(app)
+        .post('/api/register')
         .set('Accept', 'application/json')
         .send({
             name: 'mari',
@@ -18,10 +17,11 @@ describe('GET /api/users', () => {
         })
         .expect('Content-Type', restype)
         .expect(201, done)
+
     })
     it('post /login ', (done) => {
-      supertest(host)
-        .post('/login')
+      supertest(app)
+        .post('/api/login')
         .set('Accept', 'application/json')
         .send({
             name: 'mari',
@@ -34,8 +34,8 @@ describe('GET /api/users', () => {
         })
     })
     it('get /users ', function(done) {
-      supertest(host)
-        .get('/users')
+      supertest(app)
+        .get('/api/users')
         .set('Accept', 'application/json')
         .set('Authorization', 'Bearer ' + token)
         .expect(200, done)

@@ -1,9 +1,8 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
-import { readJson } from '../../tools/readjson.js'
-
-const config = await readJson('config/default.json')
+import dotenv from '@dotenvx/dotenvx'
+dotenv.config({ quiet: true })
 
 const AuthController = {
     async register(req, res) {        
@@ -47,14 +46,13 @@ const AuthController = {
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password)
         }
-        await User.create(user)
-        .then( result => {
-            res.status(201)
-            res.json({
-                succes: true,
-                data: result
-            })
+        const result = await User.create(user)
+        
+        res.status(201).json({
+            succes: true,
+            data: result
         })
+        
     },
     async login(req, res) {
         
@@ -90,7 +88,7 @@ const AuthController = {
         }
     },
     async tryLogin(req, res, user) {
-        var token = jwt.sign({ id: user.id }, config.app.key, {
+        var token = jwt.sign({ id: user.id }, process.env.APP_KEY, {
             expiresIn: 86400 //24 óra
         })
         res.status(200).json({

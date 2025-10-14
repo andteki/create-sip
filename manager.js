@@ -1,6 +1,7 @@
 const { copyDir, updatePackageName, checkIfDirExists } = require('./utils');
 const path = require('path');
 const dir = path.join(__dirname);
+const fse = require('fs-extra');
 
 const genWebpage = (target) => {
   checkIfDirExists(target);
@@ -67,10 +68,11 @@ const genMockApi = (target) => {
   console.log('  npm start');
 }
 
-const genExpressApi = (target) => {
+const genExpressApi = async (target) => {
   checkIfDirExists(target);
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
+
   console.log('ExpressJS REST API skeleton created');
   console.log('Read docs/user_doc.md');
   console.log('Run next commands:');
