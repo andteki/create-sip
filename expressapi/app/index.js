@@ -1,7 +1,7 @@
 import app from './app.js'
-import dotenv from '@dotenvx/dotenvx'
+import dotenvFlow from 'dotenv-flow'
 
-dotenv.config({ quiet: true })
+dotenv.config()
 
 const PORT = process.env.APP_PORT || 8000
 

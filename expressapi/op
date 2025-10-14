@@ -324,13 +324,6 @@ async function startGenerateAdmin() {
     const { default: User } = await import('./app/models/user.js')
     await User.sync()
 
-    await import('dotenv').then((dotenv) => dotenv.config())
-    const isMemoryDb = process.env.DB_PATH === ':memory:';
-    if(isMemoryDb) {
-      console.log('Admin cannot be created in memory db!')
-      return;
-    }
-
     const isUserExist = await User.findOne({ where: { name: 'admin' } })
     if (isUserExist) {
       console.log('Admin already exists!')

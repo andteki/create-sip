@@ -1,10 +1,10 @@
 import Sequelize from 'sequelize'
-import dotenv from '@dotenvx/dotenvx'
+import dotenvFlow from 'dotenv-flow'
 
 if (process.env.NODE_ENV === 'test') {
-    dotenv.config({ path: '.env.test', quiet: true })
+    dotenv.config({ path: '.env.test' })
 }else {
-    dotenv.config({ quiet: true })    
+    dotenv.config()    
 }
 
 const sequelize = new Sequelize(
