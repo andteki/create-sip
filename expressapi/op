@@ -300,7 +300,7 @@ APP_KEY=my_secret_key
 APP_LOG=console.log
 
 DB_DIALECT=sqlite
-DB_PATH=:memory:
+DB_STORAGE=:memory:
 `
   const destinationFileName = '.env.test'
   if(await startCheckIfFileExists(destinationFileName)) {

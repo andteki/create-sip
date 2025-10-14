@@ -73,7 +73,7 @@ const genExpressApi = async (target) => {
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
 
-  const content = `
+  const envContent = `
 APP_PORT=8000
 APP_KEY=
 APP_LOG=console.log
@@ -86,7 +86,17 @@ DB_PASS=
 DB_PATH=database.sqlite
 `
 
-  await fse.writeFile(`${target}/.env`, content, 'utf8');
+  await fse.writeFile(`${target}/.env`, envContent, 'utf8');
+
+  const gitignoreContent = `
+/node_modules
+/access.log
+/.env
+/database.sqlite
+
+`
+
+  await fse.writeFile(`${target}/.gitignore`, gitignoreContent, 'utf8');
 
   console.log('ExpressJS REST API skeleton created');
   console.log('Read docs/user_doc.md');
