@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenvFlow from 'dotenv-flow';
-dotenv.config()
+dotenvFlow.config()
 
 const verifyToken = (req, res, next) => {
     let authData = req.headers.authorization;
