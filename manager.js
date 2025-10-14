@@ -73,6 +73,21 @@ const genExpressApi = async (target) => {
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
 
+  const content = `
+APP_PORT=8000
+APP_KEY=
+APP_LOG=console.log
+
+DB_DIALECT=sqlite
+DB_HOST=127.0.0.1
+DB_NAME=
+DB_USER=
+DB_PASS=
+DB_PATH=database.sqlite
+`
+
+  await fse.writeFile(`${target}/.env`, content, 'utf8');
+
   console.log('ExpressJS REST API skeleton created');
   console.log('Read docs/user_doc.md');
   console.log('Run next commands:');
