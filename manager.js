@@ -83,7 +83,7 @@ DB_HOST=127.0.0.1
 DB_NAME=
 DB_USER=
 DB_PASS=
-DB_PATH=database.sqlite
+DB_STORAGE=database.sqlite
 `
 
   await fse.writeFile(`${target}/.env`, envContent, 'utf8');
