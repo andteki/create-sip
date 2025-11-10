@@ -25,3 +25,7 @@ npm run dev
 ```
 
 Restarting the application when saving is done by nodemon.
+
+## Migartaions and seeders
+
+The project uses umzug for migrations and seeders.

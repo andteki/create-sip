@@ -14,72 +14,79 @@ yargs(hideBin(process.argv))
 .usage('Használat: node op <command>  [name]')
 .help()
 .demandCommand(2, 'Not enough arguments!')
-.command('make:model <name>',
-  'Generates a new Sequelize model',
-  (yargs) => {
+.command({
+  command: 'make:model <name>',
+  description: 'Generates a new Sequelize model',
+  builder: (yargs) => {
     return yargs
       .positional('name', {
         type: 'string',
         description: 'Name of the model'
       })
   },
-  async (argv) => {
+  handler: async (argv) => {
     const { name } = argv;
     await copyModel(name);
   }
-)
-.command('make:controller <name>',
-  'Generates a new controller',
-  (yargs) => {
+})
+.command({
+  command: 'make:controller <name>',
+  description: 'Generates a new controller',
+  builder: (yargs) => {
     return yargs
       .positional('name', {
         type: 'string',
         description: 'Name of the controller'
       })
   },
-  async (argv) => {
+  handler: async (argv) => {
     const { name } = argv;
     await copyController(name);
   }
-)
-.command('key:generate',
-  'Generates a new API key',
-  (yargs) => {
+})
+.command({
+  command: 'key:generate',
+  description:'Generates a new API key',
+  builder: (yargs) => {
     return yargs
   },
-  async (argv) => {
+  handler: async (argv) => {
     startGenerateKey();
   }
-)
-.command('conf:generate',
-  'Generate a new config file: .env',
-  (yargs) => {
+})
+.command({
+  command: 'conf:generate',
+  description:'Generate a new config file: .env',
+  builder: (yargs) => {
     return yargs
   },
-  async (argv) => {
+  handler: async (argv) => {
     startGenerateConf();
   }
-)
-.command('testconf:generate',
-  'Generate a new config file: .env.test',
-  (yargs) => {
+})
+.command({
+  command: 'testconf:generate',
+  description:'Generate a new config file: .env.test',
+  builder: (yargs) => {
     return yargs
   },
-  async (argv) => {
+  handler: async (argv) => {
     startGenerateTestConf();
   }
-)
-.command('admin:generate',
-  'Generates a new admin user in database table: users',
-  (yargs) => {
+})
+.command({
+  command: 'admin:generate',
+  description:'Generates a new admin user in database table: users',
+  builder: (yargs) => {
     return yargs
   },
-  async (argv) => {
+  handler: async (argv) => {
     startGenerateAdmin();
   }
-)
-.command('db:import <model> <filePath> [sep]',
-  `Import CSV or JSON file to database table
+})
+.command({
+  command: 'db:import <model> <filePath> [sep]',
+  description: `Import CSV or JSON file to database table
 
 Examples:
 node op db:import thing somethings.json
@@ -90,7 +97,7 @@ node op db:import thing somethings.csv ";"
 
 In CSV file the field names must match the model fields.
   `,
-  (yargs) => {
+  builder: (yargs) => {
     return yargs
       .positional('model', {
         type: 'string',
@@ -105,42 +112,47 @@ In CSV file the field names must match the model fields.
         description: 'Separator for the CSV file'
       })
   },
-  async (argv) => {
+  handler: async (argv) => {
     const { model, filePath, sep } = argv;
     await runImportData(model, filePath, sep);
   }
-)
-.command('make:migration <name>',
-  'Generates a new migration file',
-  (yargs) => {
+})
+.command({
+  command: 'make:migration <name>',
+  description:'Generates a new migration file',
+  builder: (yargs) => {
     return yargs
       .positional('name', {
         type: 'string',
         description: 'Name of the migration'
       })
   },
-  async (argv) => {
+  handler: async (argv) => {
     const { name } = argv;
     await createMigration(name);
   }
-)
-.command('migration:run [migrationName]',
-  'Runs migrations',
-  (yargs) => {
+})
+.command({
+  command: 'migrate [migrationName]',
+  description:'Runs migrations',
+  aliases: ['migration:run'],
+  builder: (yargs) => {
     return yargs
       .positional('migrationName', {
         type: 'string',
         description: 'Name of the migration'
       })
   },
-  async (argv) => {
+  handler: async (argv) => {
     const { migrationName } = argv;
     await startMigrations(migrationName);
   }
-)
-.command('migration:rollback',
-  'Rolls back migrations',
-  (yargs) => {
+})
+.command({
+  command: 'migrate:rollback',
+  description:'Rolls back migrations',
+  aliases: ['migration:rollback'],
+  builder: (yargs) => {
     return yargs
       .options({
         step: {
@@ -150,29 +162,64 @@ In CSV file the field names must match the model fields.
         }
       })
   },
-  async (argv) => {
+  handler: async (argv) => {
     const { step } = argv;
     await rollbackMigrations(step);
   }
-)
-.command('migration:fresh',
-  'Rolls back all migrations',
-  (yargs) => {
+})
+.command({
+  command: 'migrate:fresh',
+  description:'Rolls back all migrations',
+  aliases: ['migration:fresh'],
+  builder: (yargs) => {
     return yargs
   },
-  async (argv) => {
+  handler: async (argv) => {
     await freshMigrations();
   }
-)
-.command('migration:reset',
-  'Rolls back all migrations',
-  (yargs) => {
+})
+.command({
+  command: 'migrate:reset',
+  description:'Rolls back all migrations',
+  aliases: ['migration:reset'],
+  builder: (yargs) => {
     return yargs
   },
-  async (argv) => {
+  handler: async (argv) => {
     await resetMigrations();
   }
-)
+})
+.command({
+  command: 'make:seeder <seederName>',
+  description:'Make seeder...',
+  builder: (yargs) => {
+    return yargs
+      .positional('seederName', {
+        type: 'string',
+        description: 'Name of the seeder'
+      })
+  },
+  handler: async (argv) => {
+    const { seederName } = argv;
+    await createSeeder(seederName);
+  }
+})
+.command({
+  command: 'db:seed [seederName]',
+  description:'Runs seeders',
+  aliases: ['seeder:run'],
+  builder: (yargs) => {
+    return yargs
+      .positional('seederName', {
+        type: 'string',
+        description: 'Name of the seeder'
+      })
+  },
+  handler: async (argv) => {
+    const { seederName } = argv;
+    await startSeeders(seederName);
+  }
+})
 .parse();
 
 async function copyController(className) {
@@ -459,12 +506,12 @@ async function createMigration(name) {
 
 }
 
-async function getUmzug() {
+async function getUmzug(directory) {
   const { default: sequelize } = await import('./app/database/database.js')
   const { Umzug, SequelizeStorage } = await import('umzug')
 
   const umzug = new Umzug({
-    migrations: { glob: './database/migrations/*.js' },
+    migrations: { glob: directory },
     context: sequelize.getQueryInterface(),
     storage: new SequelizeStorage({ sequelize }),
     logger: console
@@ -487,26 +534,31 @@ async function runOneMigration(name) {
   if(!name.endsWith('.js')) {
     name += '.js'
   }
-
-  const migrationPath = `database/migrations/${name}`
+  let migrationPath = '';
+  if(!name.startsWith('database/migrations/')) {
+    migrationPath = `database/migrations/${name}`
+  }else {
+    migrationPath = name
+  }
+  
   if(!await startCheckIfFileExists(migrationPath)) {
     console.log(`The migration file ${migrationPath} not already exists.`)
     process.exit(1)
   }
 
-  const umzug = await getUmzug()
+  const umzug = await getUmzug(migrationPath)
   await umzug.up()
 }
 
 async function runMigrations() {
   console.log('Run migrations...')
-  const umzug = await getUmzug()
+  const umzug = await getUmzug('./database/migrations/*.js')
   await umzug.up()
 }
 
 async function resetMigrations() {
   console.log('Reset migrations...')
-  const umzug = await getUmzug()
+  const umzug = await getUmzug('./database/migrations/*.js')
   await umzug.down({ to: 0 })
 }
 
@@ -518,6 +570,79 @@ async function freshMigrations() {
 
 async function rollbackMigrations(step = 1) {
   console.log('Rollback migrations...')
-  const umzug = await getUmzug()
+  const umzug = await getUmzug('./database/migrations/*.js')
   await umzug.down({ step: step })
+}
+
+async function createSeeder(name) {
+  console.log('Create a new seeder...', name)
+
+  const lowerName = name.toLowerCase()
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hours = String(date.getHours()).padStart(2, '0')
+  const minutes = String(date.getMinutes()).padStart(2, '0')
+  const seconds = String(date.getSeconds()).padStart(2, '0')
+  const timestamp = `${year}_${month}_${day}_${hours}${minutes}${seconds}`
+
+  const migrationName = `${timestamp}_${lowerName}`
+
+  const src = 'templates/seederTemplate.js'
+  const dest = `database/seeders/${migrationName}.js`
+
+  if(await startCheckIfFileExists(dest)) {
+    process.exit(1);
+  }
+
+  await fse.copy(src, dest)
+
+  replace({
+      regex: 'Thing',
+      replacement: capitalizeFirstLetter(name),
+      paths: [dest]
+  })
+  replace({
+      regex: 'thing',
+      replacement: name,
+      paths: [dest]
+  }) 
+
+}
+
+async function startSeeders(name) {
+  if(name) {
+    await runOneSeeder(name)
+  } else {
+    await runSeeders()
+  }
+}
+
+async function runOneSeeder(name) {
+  console.log('Run one seeder...', name)
+
+  if(!name.endsWith('.js')) {
+    name += '.js'
+  }
+  let seederPath = ''
+  if(!name.startsWith('database/seeders/')) {
+    seederPath = `database/seeders/${name}`
+  }else {
+    seederPath = name
+  }
+
+  if(!await startCheckIfFileExists(seederPath)) {
+    console.log(`The seeder file ${seederPath} not already exists.`)
+    process.exit(1)
+  }
+
+  const umzug = await getUmzug('./database/seeders/*.js')
+  await umzug.up()
+}
+
+async function runSeeders() {
+  console.log('Run seeders...')
+  const umzug = await getUmzug('./database/seeders/*.js')
+  await umzug.up()
 }

@@ -208,34 +208,60 @@ Run all migration:
 
 ```bash
 node op migration:run
+node op migrate
 ```
 
 Run a migration:
 
 ```bash
 node op migration:run <migration_name>
+node op migrate <migration_name>
 ```
 
 Rollback a migration:
 
 ```bash
 node op migration:rollback
+node op migrate:rollback
 ```
 
 Rollback two migrations:
 
 ```bash
 node op migration:rollback 2
+node op migrate:rollback 2
 ```
 
 Reset the database:
 
 ```bash
 node op migration:reset
+node op migrate:reset
 ```
 
 Reset the database and run all migrations:
 
 ```bash
 node op migration:fresh
+node op migrate:fresh
+```
+
+### Database seed
+
+Generate a seeder:
+
+```bash
+node op make/seeder thing
+```
+
+Run all seeders:
+
+```bash
+node op db:seed
+```
+
+Run a seeder:
+
+```bash
+node op db:seed path_thing
 ```
