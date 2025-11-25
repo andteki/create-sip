@@ -204,6 +204,41 @@ Generate a migration:
 node op make/migration thing
 ```
 
+For example migration for employee table:
+
+```bash
+node op make/migration employee
+```
+
+```javascript
+import { DataTypes } from 'sequelize';
+
+async function up({context: QueryInterface}) {
+  await QueryInterface.createTable('employees', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    name: {
+      type: DataTypes.STRING
+    },
+    city: {
+      type: DataTypes.STRING
+    },
+    createdAt: { type: DataTypes.DATE },
+    updatedAt: { type: DataTypes.DATE }
+  });
+}
+
+async function down({context: QueryInterface}) {
+  await QueryInterface.dropTable('employees');
+}
+
+export { up, down }
+```
+
 Run all migration:
 
 ```bash
@@ -218,7 +253,7 @@ node op migration:run <migration_name>
 node op migrate <migration_name>
 ```
 
-Rollback a migration:
+Rollback the last migration:
 
 ```bash
 node op migration:rollback
@@ -239,6 +274,8 @@ node op migration:reset
 node op migrate:reset
 ```
 
+This command also undoes seeder operations.
+
 Reset the database and run all migrations:
 
 ```bash
@@ -253,6 +290,28 @@ Generate a seeder:
 ```bash
 node op make/seeder thing
 ```
+
+Example seeder for employee table:
+
+```bash
+node op make/seeder employee
+```
+
+```javascript
+
+async function up({context: QueryInterface}) {
+  await QueryInterface.bulkInsert('employees', [
+     { id: 1, name: 'Joe Kitin' },
+     { id: 2, name: 'Peter Fall' }
+  ]);
+}
+
+async function down({context: QueryInterface}) {
+  await QueryInterface.bulkDelete('things', null, {});
+}
+
+export { up, down }
+````
 
 Run all seeders:
 
