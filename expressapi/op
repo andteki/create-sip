@@ -558,6 +558,8 @@ async function runMigrations() {
 
 async function resetMigrations() {
   console.log('Reset migrations...')
+  const umzugSeeder = await getUmzug('./database/seeders/*.js')
+  await umzugSeeder.down({ to: 0 })
   const umzug = await getUmzug('./database/migrations/*.js')
   await umzug.down({ to: 0 })
 }
@@ -637,7 +639,7 @@ async function runOneSeeder(name) {
     process.exit(1)
   }
 
-  const umzug = await getUmzug('./database/seeders/*.js')
+  const umzug = await getUmzug(seederPath)
   await umzug.up()
 }
 
