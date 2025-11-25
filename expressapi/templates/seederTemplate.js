@@ -1,8 +1,16 @@
+import db from '../../app/models/modrels.js';
 
 async function up({context: QueryInterface}) {
-  await QueryInterface.bulkInsert('things', [
+  if(db.Employee) {
+    await db.Employee.bulkCreate([
+ 
+    ]);
+  }else {
+    const now = new Date()
+    await QueryInterface.bulkInsert('things', [
 
-  ]);
+    ]);
+  }
 }
 
 async function down({context: QueryInterface}) {
