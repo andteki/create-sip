@@ -300,10 +300,24 @@ node op make/seeder employee
 ```javascript
 
 async function up({context: QueryInterface}) {
-  await QueryInterface.bulkInsert('employees', [
-     { id: 1, name: 'Joe Kitin' },
-     { id: 2, name: 'Peter Fall' }
-  ]);
+  if(db.Employee) {
+    await db.Employee.bulkCreate([
+      { id: 1, name: "John Smith" },
+      { id: 2, name: "Alice Johnson" }
+    ]);
+  }else {
+    const now = new Date()
+    await QueryInterface.bulkInsert('things', [
+      { 
+        id: 1, name: "John Smith", 
+        createdAt: now, updatedAt: now
+      },
+      { 
+        id: 2, name: "Alice Johnson", 
+        createdAt: now, updatedAt: now
+      }
+    ]);
+  }
 }
 
 async function down({context: QueryInterface}) {
