@@ -54,6 +54,9 @@ const ThingController = {
         }
     },
     async tryStore(req, res) {
+        if(req.body.id) {
+            delete req.body.id
+        }        
         const thing = await Thing.create(req.body)
         res.status(201)
         res.json({
@@ -81,6 +84,9 @@ const ThingController = {
         }
     },
     async tryUpdate(req, res) {
+        if(req.body.id) {
+            delete req.body.id
+        }        
         const recordNumber = await Thing.update(req.body, {
             where: { id: req.params.id }
         })
