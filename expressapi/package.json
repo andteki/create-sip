@@ -4,7 +4,7 @@
   "description": "Express API with simple Sequelize",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test mocha --file test/mocha.setup.js 'test/**/*.spec.js'",
     "dev": "nodemon app",
     "start": "node app"
   },
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.51.0",
+    "@sipere/op-cli": "^0.9.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv-flow": "^4.1.0",
