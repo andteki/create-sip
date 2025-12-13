@@ -1,6 +1,8 @@
-# sip expressapi template
+# seper expressapi template
 
-Express based REST API template
+Created by create-sip.
+
+Express based REST API template.
 
 ## Install dependencies
 
