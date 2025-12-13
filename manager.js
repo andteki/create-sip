@@ -73,8 +73,7 @@ const genExpressApi = async (target) => {
   copyDir(`${dir}/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
 
-  const envContent = `
-APP_PORT=8000
+  const envContent = `APP_PORT=8000
 APP_KEY=
 APP_LOG=console.log
 
@@ -88,8 +87,7 @@ DB_STORAGE=database.sqlite
 
   await fse.writeFile(`${target}/.env`, envContent, 'utf8');
 
-  const gitignoreContent = `
-/node_modules
+  const gitignoreContent = `/node_modules
 /access.log
 /.env
 /database.sqlite
