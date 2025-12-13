@@ -106,6 +106,8 @@ DB_STORAGE=database.sqlite
   console.log('Usable commands:');
   console.log('  node op make:model something');
   console.log('  node op make:controller something');
+  console.log('  node op make:migration something');
+  console.log('  node op make:seeder something');
   console.log('The model and controller names must be');
   console.log('given in the singular. More info:');
   console.log('  node op help')
