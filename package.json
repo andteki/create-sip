@@ -1,6 +1,6 @@
 {
   "name": "create-sip",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "main": "index.js",
   "bin": {
     "create-sip": "create-sip.js"

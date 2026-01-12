@@ -23,7 +23,9 @@ async function up({context: QueryInterface}) {
     roleId: {
       type: DataTypes.INTEGER,
       defaultValue: 0
-    }
+    },
+    createdAt: { type: DataTypes.DATE },
+    updatedAt: { type: DataTypes.DATE }    
   });
 }
 
