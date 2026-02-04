@@ -10,6 +10,8 @@ Simple project generator.
 * Node.js project for webpage.
 * ESBuild and Javascript project for webpage.
 * ESBuild and Typescript project for webpage.
+* Vite and Javascript project for webpage.
+* Vite and Typescript project for webpage.
 * Mock REST API server.
 * Express.js REST API start server.
 
@@ -33,6 +35,8 @@ Options:
     Web Node.js
     ESBuild JavaScript
     ESBuild TypeScript
+    Vite JavaScript
+    Vite TypeScript
     hai mock API
     Express API
 ❯   Cancel  

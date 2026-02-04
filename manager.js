@@ -5,22 +5,22 @@ const fse = require('fs-extra');
 
 const genWebpage = (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/webpage`, target);
+  copyDir(`${dir}/templates/webpage`, target);
 }
 
 const genBootstrap = (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/webbootstrap`, target);
+  copyDir(`${dir}/templates/webbootstrap`, target);
 }
 
 const genJavascript = (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/javascript`, target);
+  copyDir(`${dir}/templates/javascript`, target);
 }
 
 const genNodejs = (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/webnodejs`, target);
+  copyDir(`${dir}/templates/webnodejs`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('Web client created');
   console.log('Run next commands:');
@@ -31,7 +31,7 @@ const genNodejs = (target) => {
 
 const genWebEsbuildJs = (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/webesbuildjs`, target);
+  copyDir(`${dir}/templates/webesbuildjs`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('ESBuild client created with Javascript');
   console.log('Run next commands:');
@@ -45,7 +45,7 @@ const genWebEsbuildJs = (target) => {
 
 const genWebEsbuildTs = (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/webesbuildts`, target);
+  copyDir(`${dir}/templates/webesbuildts`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('ESBuild client created with Typescript');
   console.log('Run next commands:');
@@ -57,9 +57,37 @@ const genWebEsbuildTs = (target) => {
   console.log('  npm run build');
 }
 
+const genWebViteJs = (target) => {
+  checkIfDirExists(target);
+  copyDir(`${dir}/templates/webvitejs`, target);
+  updatePackageName(`${target}/package.json`, target);
+  console.log('Vite client created with Javascript');
+  console.log('Run next commands:');
+  console.log(`  cd ${target}`);
+  console.log('  npm install');
+  console.log('  npm start');
+  console.log('If you want to build and view, run:');
+  console.log('  npm run build');
+  console.log('  npm run preview');
+}
+
+const genWebViteTs = (target) => {
+  checkIfDirExists(target);
+  copyDir(`${dir}/templates/webvitets`, target);
+  updatePackageName(`${target}/package.json`, target);
+  console.log('Vite client created with Typescript');
+  console.log('Run next commands:');
+  console.log(`  cd ${target}`);
+  console.log('  npm install');
+  console.log('  npm start');
+  console.log('If you want to build and view, run:');
+  console.log('  npm run build');
+  console.log('  npm run preview');
+}
+
 const genMockApi = (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/mockapi`, target);
+  copyDir(`${dir}/templates/mockapi`, target);
   updatePackageName(`${target}/package.json`, target);
   console.log('MockAPI with hai-server 0.0.4');
   console.log('Run next commands:');
@@ -70,7 +98,7 @@ const genMockApi = (target) => {
 
 const genExpressApi = async (target) => {
   checkIfDirExists(target);
-  copyDir(`${dir}/expressapi`, target);
+  copyDir(`${dir}/templates/expressapi`, target);
   updatePackageName(`${target}/package.json`, target);
 
   const envContent = `APP_PORT=8000
@@ -120,6 +148,8 @@ module.exports = {
   genNodejs,
   genWebEsbuildJs,
   genWebEsbuildTs,
+  genWebViteJs,
+  genWebViteTs,
   genMockApi,
   genExpressApi
 }

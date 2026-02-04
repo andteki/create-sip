@@ -7,6 +7,8 @@ const {
   genNodejs,
   genWebEsbuildJs,
   genWebEsbuildTs,
+  genWebViteJs,
+  genWebViteTs,
   genMockApi,
   genExpressApi
 } = require('./manager');
@@ -53,6 +55,16 @@ const questions = [
         title: 'ESBuild TypeScript',
         description: 'Esbuild TypeScript webpage',
         value: 'webesbuildts'
+      },
+      { 
+        title: 'Vite JavaScript',
+        description: 'Vite JavaScript webpage',
+        value: 'webvitejs'
+      },
+      { 
+        title: 'Vite TypeScript',
+        description: 'Vite TypeScript webpage',
+        value: 'webvitets'
       },
       { 
         title: 'hai mock API',
@@ -103,6 +115,16 @@ const questions = [
   if(res.type === 'webesbuildts') {
     console.log('Create a new webpage with ESBuild and Typescript...');
     genWebEsbuildTs(res.name);
+    return;
+  }
+  if(res.type === 'webvitejs') {
+    console.log('Create a new webpage with Vite and Javascript...');
+    genWebViteJs(res.name);
+    return;
+  }
+  if(res.type === 'webvitets') {
+    console.log('Create a new webpage with Vite and Typescript...');
+    genWebViteTs(res.name);
     return;
   }
   if(res.type === 'mockapi') {
