@@ -8,10 +8,10 @@ Simple project generator.
 * Webpage with Bootstrap with CDN.
 * Webpage with CSS and JS file.
 * Node.js project for webpage.
-* ESBuild and Javascript project for webpage.
-* ESBuild and Typescript project for webpage.
-* Vite and Javascript project for webpage.
-* Vite and Typescript project for webpage.
+* ESBuild with Javascript project for webpage.
+* ESBuild with Typescript project for webpage.
+* Vite with Javascript project for webpage.
+* Vite with Typescript project for webpage.
 * Mock REST API server.
 * Express.js REST API start server.
 
